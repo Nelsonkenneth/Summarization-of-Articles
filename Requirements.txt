@@ -1,0 +1,9 @@
+numpy==1.24.3
+pandas==2.1.1
+time
+SciPy==1.12.0
+logging
+nltk
+sentence-transformers
+scikit-learn
+lexrank
