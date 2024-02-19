@@ -3,10 +3,11 @@ from sentence_transformers import SentenceTransformer, util
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from Lexrank import degree_centrality_scores
+from LexRank import degree_centrality_scores
 import pandas as pd
 import time 
 
+# Download the nltk punkt and stopwords to tokenize and ease the embeddings
 nltk.download('punkt')
 nltk.download('stopwords')
 
@@ -14,9 +15,10 @@ df = pd.read_csv(r"articles.csv")
 
 start_time = time.time()
 
+# Set the batch size for the process for it to go faster 
 batch_size = 10
 
-    
+# The main function to compute the embeddings, find the similar and important sentences from the lexrank and print them
 def summarize_text_batch(texts):
     summaries = []
     for text in texts:
@@ -51,7 +53,8 @@ for i in range(num_batches):
 df["summary"] = summaries
 
 print("Summarization completed in {:.2f} seconds".format(time.time() - start_time))
-#print(df["summary"])
-result_df = pd.concat([df[["author", "title"]], df["summary"]], axis=1)
 
-print(result_df["summary"])
+# Create a new dataframe containing the summaries and saves it 
+result_df = pd.concat([df[["author", "title"]], df["summary"]], axis=1)
+print(result_df.head())
+result = result_df.to_csv("result.csv", index=False)
